@@ -1,4 +1,10 @@
 class Stock < ApplicationRecord
+  # Validations
+  validates :name, :ticker, :last_price, presence: true
+  # Associations
+  has_many :user_stocks
+  has_many :users, through: :user_stocks
+
   def self.new_lookup(ticker_symbol)
     # Run -> $ EDITOR="code --wait" rails credentials:edit
     # to store credentials
