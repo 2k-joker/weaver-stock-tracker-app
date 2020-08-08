@@ -6,6 +6,7 @@ class Stock < ApplicationRecord
   has_many :users, through: :user_stocks
 
   def self.new_lookup(ticker_symbol)
+    ticker_symbol.upcase!
     # Run -> $ EDITOR="code --wait" rails credentials:edit
     # to store credentials
     client = IEX::Api::Client.new(
@@ -26,6 +27,7 @@ class Stock < ApplicationRecord
   end
 
   def self.check_db(ticker_symbol)
+    ticker_symbol.upcase!
     where(ticker: ticker_symbol).first
   end
 end

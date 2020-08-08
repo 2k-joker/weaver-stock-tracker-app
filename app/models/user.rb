@@ -24,7 +24,7 @@ class User < ApplicationRecord
   end
 
   def display_name
-    return "#{first_name}" if first_name || last_name
+    return "#{username}" if username
     return "#{email}"
   end
 
