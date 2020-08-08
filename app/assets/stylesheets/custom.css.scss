@@ -15,3 +15,12 @@
 .no-left-padding {
   padding-left: 1px;
 }
+
+.result-block {
+  display: inline-block;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
