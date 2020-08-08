@@ -7,6 +7,8 @@ class User < ApplicationRecord
   # Associations
   has_many :user_stocks
   has_many :stocks, through: :user_stocks
+  has_many :friendships
+  has_many :friends, through: :friendships
 
   # Validations
   validates :username, presence: true, uniqueness: { case_sensitive: false },
@@ -21,11 +23,6 @@ class User < ApplicationRecord
 
   def can_track_stock?(ticker_symbol)
     within_stock_tracking_limit? && !alread_tracking_stock?(ticker_symbol)
-  end
-
-  def display_name
-    return "#{username}" if username
-    return "#{email}"
   end
 
   def within_stock_tracking_limit?
