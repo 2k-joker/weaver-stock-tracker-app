@@ -33,8 +33,8 @@ gem 'devise-bootstrap-views', '~> 1.0'
 gem 'jquery-rails'
 # Use font-awesome for custom icons
 gem "font-awesome-rails"
-# Use devise
-
+# Use IEX gem for retrieving stock data
+gem 'iex-ruby-client'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
