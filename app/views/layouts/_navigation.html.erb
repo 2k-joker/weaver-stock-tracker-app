@@ -33,7 +33,7 @@
         <% if user_signed_in? %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <strong><%= fa_icon 'user' %> <%=  current_user.username %></strong>
+              <strong><%= fa_icon 'user' %> <%=  current_user.email %></strong>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <%= link_to "View profile", '#', class: "dropdown-item" %>
