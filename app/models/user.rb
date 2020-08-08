@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :stocks, through: :user_stocks
 
   def can_track_stock?(ticker_symbol)
-    within_stock_limit? && !alread_tracking_stock?(ticker_symbol)
+    within_stock_tracking_limit? && !alread_tracking_stock?(ticker_symbol)
   end
 
   def alread_tracking_stock?(ticker_symbol)
@@ -18,7 +18,7 @@ class User < ApplicationRecord
 
     stocks.where(id: stock.id).exists?
   end
-  def within_stock_limit?
+  def within_stock_tracking_limit?
     stocks.count < 10
   end
 end

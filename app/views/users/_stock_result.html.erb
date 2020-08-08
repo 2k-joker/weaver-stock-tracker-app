@@ -8,8 +8,20 @@
       <strong>Symbol: </strong> <%= @stock.ticker %>
       <strong>Company: </strong> <%= @stock.name %>
       <strong>Price: </strong> <%= @stock.last_price %>
-      <%= link_to 'Track', user_stocks_path(user: current_user, ticker: @stock.ticker),
-        method: :post, class: 'btn btn-sm btn-success' %>
+      <% if current_user.can_track_stock?(@stock.ticker) %>
+        <%= link_to 'Track', user_stocks_path(user: current_user, ticker: @stock.ticker),
+          method: :post, class: 'btn btn-sm btn-success ml-3' %>
+      <% else %>
+        <% if current_user.alread_tracking_stock?(@stock.ticker) %>
+          <span class="badge badge-info ml-3">
+            already tracking
+          </span>
+        <% elsif !current_user.within_stock_tracking_limit? %>
+          <span class="badge badge-warning ml-3">
+            exhausted tracking limit (10)
+          </span>
+        <% end %>
+      <% end %>
     </div>
   </div>
 <% end %>
