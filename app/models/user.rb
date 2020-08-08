@@ -4,9 +4,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # validations
+  # Associations
   has_many :user_stocks
   has_many :stocks, through: :user_stocks
+
+  # Validations
+  validates :username, presence: true, uniqueness: { case_sensitive: false },
+    length: { minimum: 3, maximum: 25 }
 
   def alread_tracking_stock?(ticker_symbol)
     stock = Stock.check_db(ticker_symbol)
