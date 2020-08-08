@@ -1,0 +1,27 @@
+<div class="result-block">
+  <%= render 'layouts/messages' %>
+</div>
+
+<% if @friends %>
+  <div class="flex-container">
+    <% @friends.each do |friend| %>
+      <div class="card card-header result-block">
+        <strong>Username: </strong> <%= friend.username %>
+        <strong>Email: </strong> <%= friend.email %>
+        <strong>No. of Stocks: </strong> <%= friend.stocks.count %>
+        <% if !current_user.already_following?(friend.username) %>
+          <%= link_to 'Follow', '#',
+            method: :post, class: 'btn btn-sm btn-success ml-3' %>
+        <% else %>
+          <span class="badge badge-info ml-3">
+            already following
+          </span>
+          <span>
+            <%= link_to 'Unfollow','#',
+              method: :post, class: 'btn btn-sm btn-danger ml-3' %>
+          </span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
