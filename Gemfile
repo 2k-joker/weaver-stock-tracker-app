@@ -28,11 +28,12 @@ gem 'jbuilder', '~> 2.5'
 # Use devise for authentication
 gem 'devise'
 # Use bootstrap to style devise forms
-gem 'bootstrap', '~> 4.4.1'
+gem 'devise-bootstrap-views', '~> 1.0'
 # Bootstrap dependency
 gem 'jquery-rails'
 # Use font-awesome for custom icons
 gem "font-awesome-rails"
+# Use devise
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
