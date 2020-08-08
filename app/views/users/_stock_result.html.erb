@@ -8,6 +8,8 @@
       <strong>Symbol: </strong> <%= @stock.ticker %>
       <strong>Company: </strong> <%= @stock.name %>
       <strong>Price: </strong> <%= @stock.last_price %>
+      <%= link_to 'Track', user_stocks_path(user: current_user, ticker: @stock.ticker),
+        method: :post, class: 'btn btn-sm btn-success' %>
     </div>
   </div>
 <% end %>
