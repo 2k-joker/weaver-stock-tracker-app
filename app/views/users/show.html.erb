@@ -1,0 +1,30 @@
+<div class="result-block">
+  <%= render 'layouts/messages' %>
+</div>
+
+<div class="card card-header result-block mt-3">
+<table class="col-md-12">
+  <tbody>
+    <tr>
+      <td><strong>Username: </strong> <%= @user.username %></td>
+      <td><strong>Total Stocks: </strong> <%= @user.stocks.count %></td>
+      <% if !current_user.already_following?(@user.id) %>
+        <td><%= link_to 'Follow', friendships_path(friend: @user),
+          method: :post, class: 'btn btn-sm btn-success ml-3' %></td>
+      <% else %>
+        <td><span class="badge badge-info ml-3">
+          following
+        </span></td>
+      <% end %>
+      <td><%= link_to 'Unfollow', friendship_path(@user), method: :delete, class: 'btn btn-sm btn-danger ml-3',
+              data: { confirm: 'Are you sure ?' } %></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<% if !@tracked_stocks.empty? %>
+  <%= render 'stocks/list' %>
+<% else %>
+  <h4><%= "#{@user.username} is not tracking any stocks" %></h4>
+<% end %>

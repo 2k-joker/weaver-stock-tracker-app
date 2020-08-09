@@ -18,8 +18,7 @@
             following
           </span></td>
         <% end %>
-        <td><%= link_to 'Profile', '#',
-            method: :post, class: 'btn btn-sm btn-success ml-3' %></td>
+        <td><%= link_to 'Profile', user_path(friend), class: 'btn btn-sm btn-success ml-3' %></td>
       </tr>
     <% end %>
     </tbody>

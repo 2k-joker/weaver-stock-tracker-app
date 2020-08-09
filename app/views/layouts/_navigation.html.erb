@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
   <div class="container">
-    <%= link_to 'Weaver', root_path, class: 'navbar-brand' %>
+    <%= link_to 'Weaver', root_path, class: 'navbar-brand', id: 'logo' %>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
@@ -36,7 +36,7 @@
               <strong><%= fa_icon 'user' %> <%=  current_user.username %></strong>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to "View profile", '#', class: "dropdown-item" %>
+              <%= link_to "View profile", my_profile_path(current_user), class: "dropdown-item" %>
               <%= link_to edit_user_registration_path, class: "dropdown-item" do %>
                 Edit Profile <%= fa_icon 'edit' %>
               <% end %>

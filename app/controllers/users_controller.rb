@@ -4,7 +4,12 @@ class UsersController < ApplicationController
   end
 
   def my_portfolio
+    @user = current_user
     @tracked_stocks = current_user.stocks
+  end
+
+  def my_profile
+
   end
 
   def search
@@ -27,5 +32,10 @@ class UsersController < ApplicationController
         format.js { render partial: 'users/friend_result' }
       end
     end
+  end
+
+  def show
+    @user = User.find(params[:id])
+    @tracked_stocks = @user.stocks
   end
 end

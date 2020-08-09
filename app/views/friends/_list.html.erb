@@ -15,8 +15,10 @@
             <th scope="row"><%= friend.username %></th>
             <td><%= friend.email %></td>
             <td><%= friend.stocks.count %></td>
-            <td><%= link_to 'Unfollow', friendship_path(friend), method: :delete, class: 'btn btn-sm btn-danger',
-              data: {confirm: 'Are you sure ?'} %></td>
+            <td><%= link_to 'Profile', user_path(friend), class: 'btn btn-sm btn-success ml-3' %>
+                <%= link_to 'Unfollow', friendship_path(friend), method: :delete, class: 'btn btn-sm btn-danger ml-3',
+                  data: { confirm: 'Are you sure ?' } %>
+            </td>
           </tr>
         <% end %>
       </tbody>
