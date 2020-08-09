@@ -5,7 +5,7 @@
         <tr>
           <th scope="col">Username</th>
           <th scope="col">Email</th>
-          <th scope="col">No. of Stocks</th>
+          <th scope="col">Total Stocks</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
@@ -15,7 +15,7 @@
             <th scope="row"><%= friend.username %></th>
             <td><%= friend.email %></td>
             <td><%= friend.stocks.count %></td>
-            <td><%= link_to 'Unfollow', '#', method: :delete, class: 'btn btn-sm btn-danger',
+            <td><%= link_to 'Unfollow', friendship_path(friend), method: :delete, class: 'btn btn-sm btn-danger',
               data: {confirm: 'Are you sure ?'} %></td>
           </tr>
         <% end %>

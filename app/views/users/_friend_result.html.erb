@@ -3,25 +3,26 @@
 </div>
 
 <% if @friends %>
-  <div class="flex-container">
-    <% @friends.each do |friend| %>
-      <div class="card card-header result-block">
-        <strong>Username: </strong> <%= friend.username %>
-        <strong>Email: </strong> <%= friend.email %>
-        <strong>No. of Stocks: </strong> <%= friend.stocks.count %>
-        <% if !current_user.already_following?(friend.username) %>
-          <%= link_to 'Follow', '#',
-            method: :post, class: 'btn btn-sm btn-success ml-3' %>
+  <div class="card card-header result-block">
+  <table class="col-md-12">
+    <tbody>
+      <% @friends.each do |friend| %>
+      <tr>
+        <td><strong>Username: </strong> <%= friend.username %></td>
+        <td><strong>Total Stocks: </strong> <%= friend.stocks.count %></td>
+        <% if !current_user.already_following?(friend.id) %>
+          <td><%= link_to 'Follow', friendships_path(friend: friend),
+            method: :post, class: 'btn btn-sm btn-success ml-3' %></td>
         <% else %>
-          <span class="badge badge-info ml-3">
-            already following
-          </span>
-          <span>
-            <%= link_to 'Unfollow','#',
-              method: :post, class: 'btn btn-sm btn-danger ml-3' %>
-          </span>
+          <td><span class="badge badge-info ml-3">
+            following
+          </span></td>
         <% end %>
-      </div>
+        <td><%= link_to 'Profile', '#',
+            method: :post, class: 'btn btn-sm btn-success ml-3' %></td>
+      </tr>
     <% end %>
+    </tbody>
+  </table>
   </div>
 <% end %>

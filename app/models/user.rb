@@ -14,6 +14,10 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: { case_sensitive: false },
     length: { minimum: 3, maximum: 25 }
 
+  def already_following?(friend_id)
+    self.friends.where(id: friend_id).exists?
+  end
+
   def alread_tracking_stock?(ticker_symbol)
     stock = Stock.check_db(ticker_symbol)
     return false unless stock
@@ -21,8 +25,8 @@ class User < ApplicationRecord
     stocks.where(id: stock.id).exists?
   end
 
-  def already_following?(username)
-    return true
+  def except_current_user(users)
+    users.reject { |user| user.id == self.id }
   end
 
   def can_track_stock?(ticker_symbol)
