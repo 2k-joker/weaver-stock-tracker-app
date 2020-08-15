@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-10">
+    <table class="table table-bordered table-hover table-dark">
+      <thead>
+        <tr>
+          <th scope="col">Ticker</th>
+          <th scope="col">Name</th>
+          <th scope="col">Performance</th>
+          <th scope="col">Last Updated</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @losers.each do |stock| %>
+          <tr>
+            <th scope="row"><%= stock.symbol %></th>
+            <td><%= stock.company_name %></td>
+            <td><%= stock.change_percent_s %></td>
+            <td><%= stock.latest_time %></td>
+            <td><% if current_user.can_track_stock?(stock.symbol) %>
+                  <%= link_to 'Track', user_stocks_path(user: current_user, ticker: stock.symbol),
+                    method: :post, class: 'btn btn-sm btn-success ml-3' %>
+                <% else %>
+                  <% if current_user.alread_tracking_stock?(stock.symbol) %>
+                    <span class="badge badge-primary ml-3">
+                      already tracking
+                    </span>
+                  <% elsif !current_user.within_stock_tracking_limit? %>
+                    <%= link_to 'Track', '#', class: 'btn btn-sm btn-secondary ml-3' %>
+                  <% end %>
+                <% end %>
+                
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
