@@ -38,6 +38,16 @@ class Stock < ApplicationRecord
     client = new_client
     client.stock_market_list(:losers)
   end
+  
+  def self.update_price(stock)
+    new_price = new_lookup(stock.ticker).last_price
+
+    return stock unless stock.last_price != new_price
+
+    stock.last_price = new_price
+    stock.save
+    stock
+  end
 
   private
 

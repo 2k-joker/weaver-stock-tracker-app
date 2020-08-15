@@ -1,4 +1,10 @@
 class StocksController < ApplicationController
+  def refresh
+    stock = Stock.find(params[:id])
+    @refreshed_stock = Stock.update_price(stock)
+    redirect_to my_portfolio_path
+  end
+
   def search
     if params[:stock]. present?
       @stock = Stock.new_lookup(params[:stock])
