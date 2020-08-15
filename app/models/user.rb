@@ -34,7 +34,7 @@ class User < ApplicationRecord
   end
 
   def within_stock_tracking_limit?
-    stocks.count < 10
+    stocks.count < 15
   end
 
   def self.matches(field_name, param)

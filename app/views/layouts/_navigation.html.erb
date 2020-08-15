@@ -6,15 +6,15 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav nav mr-auto">
         <li class="nav-item <%= 'active' if request.path == my_portfolio_path %>">
           <%= link_to 'Portfolio', my_portfolio_path, class: 'nav-link' %>
         </li>
         <li class="nav-item <%= 'active' if request.path == my_friends_path %>">
           <%= link_to "Friends", my_friends_path, class: 'nav-link' %>
         </li>
-        <li class="nav-item">
-          <%= link_to 'Market Stats', '#', class: 'nav-link' %>
+        <li class="nav-item <%= 'active' if request.path == market_stats_path %>">
+          <%= link_to 'Market Stats', market_stats_path, class: 'nav-link' %>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">

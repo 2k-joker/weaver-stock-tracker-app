@@ -5,16 +5,14 @@ class Stock < ApplicationRecord
   has_many :user_stocks
   has_many :users, through: :user_stocks
 
+  def self.check_db(ticker_symbol)
+    ticker_symbol.upcase!
+    where(ticker: ticker_symbol).first
+  end
+
   def self.new_lookup(ticker_symbol)
     ticker_symbol.upcase!
-    # Run -> $ EDITOR="code --wait" rails credentials:edit
-    # to store credentials
-    client = IEX::Api::Client.new(
-      publishable_token: Rails.application.credentials.iex_client[:sandbox_api_token],
-      secret_token: Rails.application.credentials.iex_client[:sandbox_secret_token],
-      endpoint: 'https://sandbox.iexapis.com/v1'
-    )
-   
+    client = new_client
     begin
       new(
         ticker: ticker_symbol,
@@ -26,8 +24,30 @@ class Stock < ApplicationRecord
     end
   end
 
-  def self.check_db(ticker_symbol)
-    ticker_symbol.upcase!
-    where(ticker: ticker_symbol).first
+  def self.most_active
+    client = new_client
+    client.stock_market_list(:mostactive)
+  end
+    
+  def self.top_gainers
+    client = new_client
+    client.stock_market_list(:gainers)
+  end
+
+  def self.top_losers
+    client = new_client
+    client.stock_market_list(:losers)
+  end
+
+  private
+
+  def self.new_client
+    # Run -> $ EDITOR="code --wait" rails credentials:edit
+    # to store credentials
+    client ||= IEX::Api::Client.new(
+      publishable_token: Rails.application.credentials.iex_client[:sandbox_api_token],
+      secret_token: Rails.application.credentials.iex_client[:sandbox_secret_token],
+      endpoint: 'https://sandbox.iexapis.com/v1'
+    )
   end
 end
