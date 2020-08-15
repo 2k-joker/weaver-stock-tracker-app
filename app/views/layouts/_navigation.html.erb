@@ -13,21 +13,9 @@
         <li class="nav-item <%= 'active' if request.path == my_friends_path %>">
           <%= link_to "Friends", my_friends_path, class: 'nav-link' %>
         </li>
-        <% if user_signed_in? && current_user %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Categories
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <%= link_to "New category", '#', class: "dropdown-item"  %>
-                <%= link_to "View categories", '#', class: "dropdown-item"  %>
-            </div>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to 'Categories', '#', class: 'nav-link' %>
-          </li>
-        <% end %>
+        <li class="nav-item">
+          <%= link_to 'Market Stats', '#', class: 'nav-link' %>
+        </li>
       </ul>
       <ul class="navbar-nav ml-auto">
         <% if user_signed_in? %>

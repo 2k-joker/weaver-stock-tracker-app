@@ -19,4 +19,8 @@ class StocksController < ApplicationController
       end
     end
   end
+
+  def stats
+    
+  end
 end
