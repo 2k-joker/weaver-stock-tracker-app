@@ -26,6 +26,11 @@ body {
   height: 100%;
 }
 
+#background-image {
+  background-image: asset-url('background.jpg');
+  background-position: center center;
+ }
+
 #page-content {
   flex: 1 0 auto;
 }

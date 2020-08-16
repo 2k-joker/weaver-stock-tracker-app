@@ -1,44 +1,44 @@
-<h1><%= t('.sign_up') %></h1>
+<h1 class="mt-3 text-white"><%= t('.sign_up') %></h1>
 
-<div class="row">
+<div class="row mt-5">
   <div class="col-9">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= bootstrap_devise_error_messages! %>
 
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 text-white">
           <%= f.label :first_name %>
           <%= f.text_field :first_name, autofocus: true, autocomplete: 'first_name', class: 'form-control' %>
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 text-white">
           <%= f.label :last_name %>
           <%= f.text_field :last_name, autofocus: true, autocomplete: 'last_name', class: 'form-control' %>
         </div>
       </div>
 
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 text-white">
           <%= f.label :email %>
           <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 text-white">
           <%= f.label :username %>
           <%= f.text_field :username, autofocus: true, autocomplete: 'username', class: 'form-control' %>
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group text-white">
         <%= f.label :password %>
         <%= f.password_field :password, autocomplete: 'current-password', class: 'form-control' %>
 
         <% if @minimum_password_length %>
-          <small class="form-text text-muted"><%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %></small>
+          <small class="form-text text-white"><%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %></small>
         <% end %>
       </div>
 
-      <div class="form-group">
+      <div class="form-group text-white">
         <%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control' %>
       </div>

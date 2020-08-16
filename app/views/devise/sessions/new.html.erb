@@ -1,19 +1,19 @@
-<h1><%= t('.sign_in') %></h1>
-<div class="row">
+<h1 class="text-white mt-3"><%= t('.sign_in') %></h1>
+<div class="row mt-5">
   <div class="col-9">
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="form-group">
+      <div class="form-group text-white">
         <%= f.label :username %>
         <%= f.text_field :username, autofocus: true, autocomplete: 'username', class: 'form-control' %>
       </div>
 
-      <div class="form-group">
+      <div class="form-group text-white">
         <%= f.label :password %>
         <%= f.password_field :password, autocomplete: 'current-password', class: 'form-control' %>
       </div>
 
       <% if devise_mapping.rememberable? %>
-        <div class="form-group form-check">
+        <div class="form-group form-check text-white">
           <%= f.check_box :remember_me, class: 'form-check-input' %>
           <%= f.label :remember_me, class: 'form-check-label' do %>
             <%= resource.class.human_attribute_name('remember_me') %>
