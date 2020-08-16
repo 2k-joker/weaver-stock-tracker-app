@@ -4,24 +4,24 @@
 
 <% if @friends %>
   <div class="card card-header result-block">
-  <table class="col-md-12">
-    <tbody>
-      <% @friends.each do |friend| %>
-      <tr>
-        <td><strong>Username: </strong> <%= friend.username %></td>
-        <td><strong>Total Stocks: </strong> <%= friend.stocks.count %></td>
-        <% if !current_user.already_following?(friend.id) %>
-          <td><%= link_to 'Follow', friendships_path(friend: friend),
-            method: :post, class: 'btn btn-sm btn-success ml-3' %></td>
-        <% else %>
-          <td><span class="badge badge-info ml-3">
-            following
-          </span></td>
+    <table class="col-md-12">
+      <tbody>
+        <% @friends.each do |friend| %>
+          <tr>
+            <td><strong>Username: </strong> <%= friend.username %></td>
+            <td><strong>Total Stocks: </strong> <%= friend.stocks.count %></td>
+            <% if !current_user.already_following?(friend.id) %>
+              <td><%= link_to 'Follow', friendships_path(friend: friend),
+                method: :post, class: 'btn btn-sm btn-success ml-3' %></td>
+            <% else %>
+              <td><span class="badge badge-info ml-3">
+                following
+              </span></td>
+            <% end %>
+            <td><%= link_to 'Profile', user_path(friend), class: 'btn btn-sm btn-success ml-3' %></td>
+          </tr>
         <% end %>
-        <td><%= link_to 'Profile', user_path(friend), class: 'btn btn-sm btn-success ml-3' %></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
   </div>
 <% end %>
