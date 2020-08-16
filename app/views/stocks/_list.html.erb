@@ -16,9 +16,13 @@
             <th scope="row"><%= stock.ticker %></th>
             <td><%= stock.name %></td>
             <td id="stock-price">$<%= stock.last_price %></td>
-            <td class=<%= stock.recent_performance.start_with?('-') ? 'font-red' : 'font-green' %>>
-              <strong><%= stock.recent_performance %></strong>
-            </td>
+            <% if stock.recent_performance? %>
+              <td class=<%= stock.recent_performance.start_with?('-') ? 'font-red' : 'font-green' %>>
+                <strong><%= stock.recent_performance %></strong>
+              </td>
+            <% else %>
+              <td><%= 'N/A' %></td>
+            <% end %>
             <td><% if current_user.can_track_stock?(stock.ticker) %>
                   <%= link_to 'Track', user_stocks_path(user: current_user, ticker: stock.ticker),
                     method: :post, class: 'btn btn-sm btn-success ml-3' %>
