@@ -4,10 +4,14 @@
 
 <% if @stock %>
   <div class="flex-container">
-    <div class="card card-header result-block">
+    <div class="card card-header text-white bg-dark result-block">
       <strong>Symbol: </strong> <%= @stock.ticker %>
       <strong>Company: </strong> <%= @stock.name %>
-      <strong>Price: </strong> <%= @stock.last_price %>
+      <strong>Price: </strong> $<%= @stock.last_price %>
+      <strong>Recent Performance: </strong> 
+        <span class=<%= @stock.recent_performance.start_with?('-') ? 'font-red' : 'font-green' %>>
+          <%= @stock.recent_performance %>        
+        </span>
       <% if current_user.can_track_stock?(@stock.ticker) %>
         <%= link_to 'Track', user_stocks_path(user: current_user, ticker: @stock.ticker),
           method: :post, class: 'btn btn-sm btn-success ml-3' %>

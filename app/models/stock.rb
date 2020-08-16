@@ -17,7 +17,8 @@ class Stock < ApplicationRecord
       new(
         ticker: ticker_symbol,
         name: client.company(ticker_symbol).company_name,
-        last_price: client.price(ticker_symbol)
+        last_price: client.price(ticker_symbol),
+        recent_performance: client.key_stats(ticker_symbol).day_5_change_percent_s
       )
     rescue => exception
       return nil
@@ -39,17 +40,28 @@ class Stock < ApplicationRecord
     client.stock_market_list(:losers)
   end
   
-  def self.update_price(stock)
-    new_price = new_lookup(stock.ticker).last_price
+  def self.update_price_and_performance(stock)
+    look_up = new_lookup(stock.ticker)
+    new_performance = look_up.recent_performance
+    new_price = look_up.last_price
 
-    return stock unless stock.last_price != new_price
+    return stock unless updated_price?(stock, new_price) || updated_performance?(stock, new_performance)
 
-    stock.last_price = new_price
+    stock.last_price = new_price unless !updated_price?(stock, new_price)
+    stock.recent_performance = new_performance unless !updated_performance?(stock, new_performance)
     stock.save
     stock
   end
 
   private
+
+  def self.updated_price?(stock,new_price)
+    stock.last_price != new_price
+  end
+
+  def self.updated_performance?(stock,new_performance)
+    stock.recent_performance != new_performance
+  end
 
   def self.new_client
     # Run -> $ EDITOR="code --wait" rails credentials:edit

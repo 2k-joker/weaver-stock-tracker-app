@@ -15,7 +15,9 @@
           <tr>
             <th scope="row"><%= stock.symbol %></th>
             <td><%= stock.company_name %></td>
-            <td><%= stock.change_percent_s %></td>
+            <td class=<%= stock.change_percent_s.start_with?('-') ? 'font-red' : 'font-green' %>>
+              <strong><%= stock.change_percent_s %></strong>
+            </td>
             <td><%= stock.latest_time %></td>
             <td><% if current_user.can_track_stock?(stock.symbol) %>
                   <%= link_to 'Track', user_stocks_path(user: current_user, ticker: stock.symbol),

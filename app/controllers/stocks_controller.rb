@@ -1,7 +1,10 @@
 class StocksController < ApplicationController
   def refresh
     stock = Stock.find(params[:id])
-    @refreshed_stock = Stock.update_price(stock)
+    @refreshed_stock = Stock.update_price_and_performance(stock)
+    # respond_to do |format|
+    #   format.js { render partial: 'stocks/stock_price' }
+    # end
     redirect_to my_portfolio_path
   end
 
