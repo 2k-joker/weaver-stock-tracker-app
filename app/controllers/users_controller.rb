@@ -12,6 +12,16 @@ class UsersController < ApplicationController
 
   end
 
+  def refresh
+    begin
+      stocks = current_user.stocks
+      refresh_stocks(stocks)
+      redirect_to my_portfolio_path
+    rescue => exception
+      flash[:alert] = "Oops! Could not refresh stocks. Please try again."
+    end
+  end
+
   def search
     if params[:friend]. present?
       @friends = User.search(params[:friend])

@@ -4,11 +4,12 @@ Rails.application.routes.draw do
   resources :friendships, only: [:create, :destroy]
   resources :users, only: [:show]
   root 'welcome#index'
+  get 'my_friends', to: 'users#my_friends'
   get 'my_portfolio', to: 'users#my_portfolio'
   get 'my_profile', to: 'users#my_profile'
-  get 'my_friends', to: 'users#my_friends'
+  put 'refresh_stocks', to: 'users#refresh'
   get 'search_friend', to: 'users#search'
+  get 'market_stats', to: 'stocks#stats'
   get 'search_stock', to: 'stocks#search'
   put 'refresh_stock', to: 'stocks#refresh'
-  get 'market_stats', to: 'stocks#stats'
 end

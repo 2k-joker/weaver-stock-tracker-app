@@ -1,11 +1,13 @@
 class StocksController < ApplicationController
   def refresh
-    stock = Stock.find(params[:id])
-    @refreshed_stock = Stock.update_price_and_performance(stock)
-    # respond_to do |format|
-    #   format.js { render partial: 'stocks/stock_price' }
-    # end
-    redirect_to my_portfolio_path
+    begin
+      stock = Stock.find(params[:id])
+      byebug
+      refresh_stocks(stock)
+      redirect_to my_portfolio_path
+    rescue => exception
+      flash[:alert] = "Oops! Could not refresh stock. Please try again."
+    end
   end
 
   def search

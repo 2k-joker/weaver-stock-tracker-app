@@ -45,7 +45,7 @@ class Stock < ApplicationRecord
     new_performance = look_up.recent_performance
     new_price = look_up.last_price
 
-    return stock unless updated_price?(stock, new_price) || updated_performance?(stock, new_performance)
+    return stock unless updated?(stock, new_price, new_performance)
 
     stock.last_price = new_price unless !updated_price?(stock, new_price)
     stock.recent_performance = new_performance unless !updated_performance?(stock, new_performance)
@@ -54,6 +54,10 @@ class Stock < ApplicationRecord
   end
 
   private
+
+  def self.updated?(stock, new_price, new_performance)
+    updated_price?(stock, new_price) || updated_performance?(stock, new_performance)
+  end
 
   def self.updated_price?(stock,new_price)
     stock.last_price != new_price
