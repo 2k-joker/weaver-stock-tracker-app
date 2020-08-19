@@ -3,8 +3,8 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def refresh_stocks(stock_object)
-    if stock_object.respond_to?('map')
-      stock_object.map { |stock| Stock.update_price_and_performance(stock) }
+    if stock_object.respond_to?('each')
+      stock_object.each { |stock| Stock.update_price_and_performance(stock) }
     else
       Stock.update_price_and_performance(stock_object)
     end

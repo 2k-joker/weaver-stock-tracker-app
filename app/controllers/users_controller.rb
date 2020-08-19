@@ -19,7 +19,7 @@ class UsersController < ApplicationController
       redirect_to my_portfolio_path
     rescue => exception
       flash[:alert] = "Oops! Could not refresh stocks. Please try again."
-    end
+    end    
   end
 
   def search
