@@ -32,7 +32,7 @@ class StocksController < ApplicationController
 
   def stats
     @most_active = Stock.most_active
-    @gainers = Stock.top_gainers
-    @losers = Stock.top_losers
+    @top_gainers = Stock.top_gainers
+    @top_losers = Stock.top_losers
   end
 end

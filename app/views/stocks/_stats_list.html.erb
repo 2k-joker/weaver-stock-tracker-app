@@ -11,14 +11,14 @@
         </tr>
       </thead>
       <tbody>
-        <% @most_active.each do |stock| %>
+        <% obj.each do |stock| %>
           <tr>
             <th scope="row"><%= stock.symbol %></th>
             <td><%= stock.company_name %></td>
             <td class=<%= stock.change_percent_s.start_with?('-') ? 'font-red' : 'font-green' %>>
               <strong><%= stock.change_percent_s %></strong>
             </td>
-            <td><%= Time.now.in_time_zone(-5).strftime("%B, %d at %l:%M %p ET") %></td>
+            <td><%= Time.now.in_time_zone('Eastern Time (US & Canada)').strftime("Today at %l:%M %p ET") %></td>
             <td><% if current_user.can_track_stock?(stock.symbol) %>
                   <%= link_to 'Track', user_stocks_path(user: current_user, ticker: stock.symbol),
                     method: :post, class: 'btn btn-sm btn-success ml-3' %>
