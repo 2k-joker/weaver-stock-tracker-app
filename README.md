@@ -44,5 +44,5 @@
 
 ## CONTRIBUTING
 * Bug reports and [pull requests](https://github.com/2k-joker/weaver-stock-tracker-app) on Github are more than welcome
-* Currently trying to figure out how to add stock lookup by on company name
+* Currently trying to figure out how to add stock lookup by company name
 * The front-end needs a ton of work/optimization
