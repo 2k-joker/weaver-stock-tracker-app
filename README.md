@@ -1,5 +1,5 @@
 ## NOTES
-* This project is still a very long way from completion but it's live on heroku: https://weaver-stock-tracker.herokuapp.com/
+* This project is still a very long way from completion but it's live on [heroku](https://weaver-stock-tracker.herokuapp.com/)
 * The UI is a mess but it works! The stock data is retrieved live from the [IEX cloud API](https://iexcloud.io/)
 * Stock lookup is only done by company's `ticker simbol` for now
 
@@ -43,6 +43,6 @@
 * The app should be running on `localhost:3000`
 
 ## CONTRIBUTING
-* Bug reports and pull requests on Github at https://github.com/2k-joker/weaver-stock-tracker-app are more than welcome
+* Bug reports and [pull requests](https://github.com/2k-joker/weaver-stock-tracker-app) on Github are more than welcome
 * Currently trying to figure out how to add stock lookup by on company name
 * The front-end needs a ton of work/optimization
