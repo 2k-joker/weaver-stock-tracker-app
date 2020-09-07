@@ -23,14 +23,14 @@
             <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <strong><%= fa_icon 'user' %> <%=  current_user.username %></strong>
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
               <%= link_to "View profile", my_profile_path(current_user), class: "dropdown-item" %>
               <%= link_to edit_user_registration_path, class: "dropdown-item" do %>
-                Edit Profile <%= fa_icon 'edit' %>
+                Edit Profile <%= fa_icon('edit', class: 'edit-icon') %>
               <% end %>
               <%= link_to 'Logout', destroy_user_session_path, class: "dropdown-item", method: :delete %>
               <%= link_to 'Delete account', user_registration_path, class: "dropdown-item text-danger",
-                  method: :delete, data: { confirm: "It's ok... I'm not offended. I'm sure you didn't mean to do that. Now go ahead and hit 'Cancel'" } %>
+                  method: :delete, data: { confirm: "It's ok... we're not offended. Surely you didn't mean to do that. Now go ahead and hit 'Cancel'" } %>
             </div>
           </li>
         <% else %>
