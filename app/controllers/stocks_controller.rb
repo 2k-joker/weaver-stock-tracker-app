@@ -1,14 +1,4 @@
 class StocksController < ApplicationController
-  def refresh
-    begin
-      stock = Stock.find(params[:id])
-      refresh_stocks(stock)
-      redirect_to my_portfolio_path
-    rescue => exception
-      flash[:alert] = "Oops! Could not refresh #{stock.ticker}. Please try again."
-    end
-  end
-
   def search
     if params[:stock]. present?
       @stock = Stock.new_lookup(params[:stock])

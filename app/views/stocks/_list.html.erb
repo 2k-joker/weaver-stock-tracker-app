@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-3 ml-auto" id="refresh-button">
     <% if current_user.id == @user.id %>
-      <%= link_to 'Refresh', refresh_stocks_path, remote: true, method: :put, class: 'btn btn-sm btn-success ml-3' %>
+      <%= link_to 'Refresh', refresh_stocks_path, method: :put, class: 'btn btn-sm btn-success ml-3' %>
     <% end %>
   </div>
 </div>
