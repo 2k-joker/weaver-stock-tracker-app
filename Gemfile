@@ -35,6 +35,8 @@ gem 'jquery-rails'
 gem "font-awesome-rails"
 # Use IEX gem for retrieving stock data
 gem 'iex-ruby-client'
+# Use HTTParty for making http requests
+gem 'httparty', '~> 0.15.5'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
