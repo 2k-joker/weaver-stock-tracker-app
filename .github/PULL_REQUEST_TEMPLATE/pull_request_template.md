@@ -1,10 +1,10 @@
+Fixes #(issue-number)
 
-## Type of change
+**Description:**
+Provide a brief context of the problem and how your code change fixes it
 
-Please use appropriate labels
+**Dependencies:**
+List any relevant dependencies that are required for this change
 
-
-# Description
-
-Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
-
+**Testing Instructions:**
+Provide helpful steps on how to test your code change
