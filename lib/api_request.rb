@@ -36,7 +36,7 @@ class ApiRequest
   end
 
   def formatted_body(body, format)
-    unless body.blank?
+    if body.present?
       format_body(body, format)
     end
   end

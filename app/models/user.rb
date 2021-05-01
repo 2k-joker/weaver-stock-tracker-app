@@ -5,9 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   # Associations
-  has_many :user_stocks
+  has_many :user_stocks, dependent: :destroy
   has_many :stocks, through: :user_stocks
-  has_many :friendships
+  has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
 
   # Validations
@@ -15,7 +15,7 @@ class User < ApplicationRecord
     length: { minimum: 3, maximum: 25 }
 
   def already_following?(friend_id)
-    self.friends.where(id: friend_id).exists?
+    friends.where(id: friend_id).exists?
   end
 
   def alread_tracking_stock?(ticker_symbol)
@@ -30,7 +30,7 @@ class User < ApplicationRecord
   end
 
   def except_current_user(users)
-    users.reject { |user| user.id == self.id }
+    users.reject { |user| user.id == id }
   end
 
   def within_stock_tracking_limit?
@@ -46,14 +46,15 @@ class User < ApplicationRecord
   end
 
   def self.name_matches(param)
-    (matches('first_name ', param) + matches('last_name',param) + 
-      matches('username', param)).uniq
+    (
+      matches('first_name ', param) + matches('last_name', param) + matches('username', param)
+    ).uniq
   end
 
   def self.search(param)
     param.strip!
-    query_result = (email_matches(param) + name_matches(param)).uniq
-    return nil unless query_result
-    query_result
+    query_result = email_matches(param) + name_matches(param)
+
+    query_result&.uniq
   end
 end

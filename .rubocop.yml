@@ -1,0 +1,235 @@
+# Rubocop comes with most cops enabled and some disabled by default.
+# The style guide does not match these defaults so we explicitly enable/disable some cops below.
+
+require: rubocop-rails
+
+AllCops:
+  DisplayCopNames: true
+  Exclude:
+    # Exempt auto-generated and third-party files from style guidelines.
+    # Also exempt old migrations that shouldn't be modified so hookup won't reapply them.
+    - bin/*
+    - db/migrate/2020*
+    - node_modules/**/*
+    - db/schema.rb
+    - vendor/**/*
+  NewCops: enable
+  TargetRailsVersion: 5.2
+  TargetRubyVersion: 2.6
+
+Layout/ArrayAlignment:
+  Enabled: false
+
+Layout/CaseIndentation:
+  EnforcedStyle: end
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Layout/EmptyLineBetweenDefs:
+  Enabled: true
+
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: variable
+
+Layout/FirstParameterIndentation:
+  Enabled: false
+
+Layout/HashAlignment:
+  Enabled: false
+
+Layout/LineLength:
+  Exclude:
+    - config/**/*
+  Max: 120
+
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: true
+  EnforcedStyle: symmetrical
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: true
+  EnforcedStyle: indented
+
+Layout/MultilineOperationIndentation:
+  Enabled: true
+  EnforcedStyle: indented
+
+Layout/ParameterAlignment:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Lint/AmbiguousOperator:
+  Enabled: false
+
+Lint/AmbiguousRegexpLiteral:
+  Enabled: false
+
+Lint/AssignmentInCondition:
+  Enabled: false
+
+Lint/Loop:
+  Enabled: false
+
+Lint/ParenthesesAsGroupedExpression:
+  Enabled: true
+
+Lint/SuppressedException:
+  Enabled: false
+
+Lint/UnusedBlockArgument:
+  Enabled: true
+
+Lint/UnusedMethodArgument:
+  Enabled: true
+
+Lint/UselessAssignment:
+  Enabled: true
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: true
+  Max: 150
+
+Metrics/ParameterLists:
+  Max: 5
+
+Metrics/PerceivedComplexity:
+  Enabled: true
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+Naming/PredicateName:
+  Enabled: true
+
+Naming/RescuedExceptionsVariableName:
+  PreferredName: error
+
+Naming/VariableNumber:
+  Enabled: false
+
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/CollectionMethods:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/FormatString:
+  EnforcedStyle: percent
+
+Style/FormatStringToken:
+  Enabled: true
+  EnforcedStyle: template
+
+# Disabled because it clutters up the source and Ruby 3.0 makes it the default:
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/Lambda:
+  Enabled: false
+
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  Exclude:
+    - Gemfile
+    - Rakefile
+    - app/views/**/*
+    - app/controllers/**/*
+    - bin/*
+    - config.ru
+    - config/**/*
+    - db/migrate/*
+    - lib/tasks/*
+    - spec/**/*
+    - test/**/*
+  IgnoreMacros: true
+  IgnoredMethods:
+    - require
+
+Style/MethodCalledOnDoEndBlock:
+  Enabled: false
+
+Style/MissingRespondToMissing:
+  Enabled: false
+
+# Disabled because .freeze clutters up the code; gems should use this:
+Style/MutableConstant:
+  Enabled: true
+  EnforcedStyle: literals
+
+Style/Next:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/ParallelAssignment:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
+# This is a bit too aggressive as of 0.49.0, since it converts assignment:
+Style/SafeNavigation:
+  Enabled: false
+
+Style/SignalException:
+  Enabled: true
+
+# As of 0.49.0 this tries to convert arrays nested inside method parameters with symbols
+# (like from permit), which doesn't look good:
+Style/SymbolArray:
+  Enabled: false
+
+Style/SymbolProc:
+  IgnoredMethods:
+    - open
+
+Style/TernaryParentheses:
+  Enabled: false
+
+Style/TrivialAccessors:
+  Enabled: true
+  ExactNameMatch: false
+  AllowPredicates: true
+
+Style/WhileUntilModifier:
+  Enabled: true
+
+Style/WordArray:
+  MinSize: 3
