@@ -13,15 +13,9 @@ class Stock < ApplicationRecord
     def new_lookup(company_name)
       ticker_symbol = retrieve_ticker_symbol(company_name)
 
-      create_stock(ticker_symbol)
+      build_stock_object(ticker_symbol)
     rescue StandardError => error
-      error_message = {
-        ticker: ticker_symbol,
-        error: error.message
-      }.to_json
-
-      Rails.logger.error(error_message)
-      nil
+      log_stock_lookup_error(ticker_symbol, error)
     end
 
     def most_active
@@ -36,28 +30,24 @@ class Stock < ApplicationRecord
       iex_client.stock_market_list(:losers)
     end
 
-    def update_price_and_performance(stock)
+    def update_price_and_performance_for(stock)
       look_up = new_lookup(stock.ticker)
 
       stock.last_price = look_up.last_price
       stock.recent_performance = look_up.recent_performance
-      stock.save
+      stock.save!
       stock
     end
 
     private
 
-    def create_stock(ticker_symbol)
+    def build_stock_object(ticker_symbol)
       new(
         ticker: ticker_symbol,
         name: iex_client.company(ticker_symbol).company_name,
         last_price: iex_client.price(ticker_symbol),
         recent_performance: iex_client.key_stats(ticker_symbol).day_5_change_percent_s
       )
-    end
-
-    def retrieve_ticker_symbol(company_name)
-      yahoo_client.get_ticker_symbol(company_name)
     end
 
     def iex_client
@@ -68,6 +58,21 @@ class Stock < ApplicationRecord
         secret_token: Rails.application.credentials.iex_client[:sandbox_secret_token],
         endpoint: 'https://sandbox.iexapis.com/v1'
       )
+    end
+
+    def log_stock_lookup_error(ticker_symbol, error)
+      error_message = {
+        message: 'Error looking up stock data',
+        ticker: ticker_symbol,
+        error: error.message
+      }.to_json
+
+      Rails.logger.error(error_message)
+      nil
+    end
+
+    def retrieve_ticker_symbol(company_name)
+      yahoo_client.get_ticker_symbol(company_name)
     end
 
     def yahoo_client

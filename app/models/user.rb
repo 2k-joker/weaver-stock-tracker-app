@@ -18,7 +18,7 @@ class User < ApplicationRecord
     friends.where(id: friend_id).exists?
   end
 
-  def alread_tracking_stock?(ticker_symbol)
+  def already_tracking?(ticker_symbol)
     stock = Stock.check_db(ticker_symbol)
     return false unless stock
 
@@ -26,7 +26,7 @@ class User < ApplicationRecord
   end
 
   def can_track_stock?(ticker_symbol)
-    within_stock_tracking_limit? && !alread_tracking_stock?(ticker_symbol)
+    within_stock_tracking_limit? && !already_tracking?(ticker_symbol)
   end
 
   def except_current_user(users)

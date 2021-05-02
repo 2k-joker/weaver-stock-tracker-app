@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def refresh_stocks(stocks)
-    stocks&.each { |stock| Stock.update_price_and_performance(stock) }
+    stocks&.each { |stock| Stock.update_price_and_performance_for(stock) }
   end
 
   protected

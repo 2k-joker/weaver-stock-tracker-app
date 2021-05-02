@@ -1,7 +1,6 @@
 module ApiClients
   module YahooApi
     class ApiClient
-      include HTTParty
       def initialize(config)
         @config = config
       end
