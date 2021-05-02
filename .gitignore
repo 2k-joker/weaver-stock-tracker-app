@@ -32,3 +32,6 @@
 
 # Ignore other random stuff
 *.DS_Store
+
+# Misc
+/.ruby-version

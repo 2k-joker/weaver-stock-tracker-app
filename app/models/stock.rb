@@ -2,78 +2,83 @@ class Stock < ApplicationRecord
   # Validations
   validates :name, :ticker, :last_price, presence: true
   # Associations
-  has_many :user_stocks
+  has_many :user_stocks, dependent: :destroy
   has_many :users, through: :user_stocks
 
-  def self.check_db(ticker_symbol)
-    ticker_symbol.upcase!
-    where(ticker: ticker_symbol).first
-  end
+  class << self
+    def check_db(ticker_symbol)
+      find_by(ticker: ticker_symbol.upcase)
+    end
 
-  def self.new_lookup(ticker_symbol)
-    ticker_symbol.upcase!
-    client = new_client
-    begin
+    def new_lookup(company_name)
+      ticker_symbol = retrieve_ticker_symbol(company_name)
+
+      build_stock_object(ticker_symbol)
+    rescue StandardError => error
+      log_stock_lookup_error(ticker_symbol, error)
+    end
+
+    def most_active
+      iex_client.stock_market_list(:mostactive)
+    end
+
+    def top_gainers
+      iex_client.stock_market_list(:gainers)
+    end
+
+    def top_losers
+      iex_client.stock_market_list(:losers)
+    end
+
+    def update_price_and_performance_for(stock)
+      look_up = new_lookup(stock.ticker)
+
+      stock.last_price = look_up.last_price
+      stock.recent_performance = look_up.recent_performance
+      stock.save!
+      stock
+    end
+
+    private
+
+    def build_stock_object(ticker_symbol)
       new(
         ticker: ticker_symbol,
-        name: client.company(ticker_symbol).company_name,
-        last_price: client.price(ticker_symbol),
-        recent_performance: client.key_stats(ticker_symbol).day_5_change_percent_s
+        name: iex_client.company(ticker_symbol).company_name,
+        last_price: iex_client.price(ticker_symbol),
+        recent_performance: iex_client.key_stats(ticker_symbol).day_5_change_percent_s
       )
-    rescue => exception
-      return nil
     end
-  end
 
-  def self.most_active
-    client = new_client
-    client.stock_market_list(:mostactive)
-  end
-    
-  def self.top_gainers
-    client = new_client
-    client.stock_market_list(:gainers)
-  end
+    def iex_client
+      # Run -> $ EDITOR="code --wait" rails credentials:edit
+      # to store credentials
+      @iex_client ||= IEX::Api::Client.new(
+        publishable_token: Rails.application.credentials.iex_client[:sandbox_api_token],
+        secret_token: Rails.application.credentials.iex_client[:sandbox_secret_token],
+        endpoint: 'https://sandbox.iexapis.com/v1'
+      )
+    end
 
-  def self.top_losers
-    client = new_client
-    client.stock_market_list(:losers)
-  end
-  
-  def self.update_price_and_performance(stock)
-    look_up = new_lookup(stock.ticker)
-    new_performance = look_up.recent_performance
-    new_price = look_up.last_price
+    def log_stock_lookup_error(ticker_symbol, error)
+      error_message = {
+        message: 'Error looking up stock data',
+        ticker: ticker_symbol,
+        error: error.message
+      }.to_json
 
-    return stock unless updated?(stock, new_price, new_performance)
+      Rails.logger.error(error_message)
+      nil
+    end
 
-    stock.last_price = new_price unless !updated_price?(stock, new_price)
-    stock.recent_performance = new_performance unless !updated_performance?(stock, new_performance)
-    stock.save
-    stock
-  end
+    def retrieve_ticker_symbol(company_name)
+      yahoo_client.get_ticker_symbol(company_name)
+    end
 
-  private
-
-  def self.updated?(stock, new_price, new_performance)
-    updated_price?(stock, new_price) || updated_performance?(stock, new_performance)
-  end
-
-  def self.updated_price?(stock,new_price)
-    stock.last_price != new_price
-  end
-
-  def self.updated_performance?(stock,new_performance)
-    stock.recent_performance != new_performance
-  end
-
-  def self.new_client
-    # Run -> $ EDITOR="code --wait" rails credentials:edit
-    # to store credentials
-    client ||= IEX::Api::Client.new(
-      publishable_token: Rails.application.credentials.iex_client[:sandbox_api_token],
-      secret_token: Rails.application.credentials.iex_client[:sandbox_secret_token],
-      endpoint: 'https://sandbox.iexapis.com/v1'
-    )
+    def yahoo_client
+      @yahoo_client ||= ApiClients::YahooApi::ApiClient.new(
+        ApiClients::YahooApi::Config.new
+      )
+    end
   end
 end

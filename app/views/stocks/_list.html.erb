@@ -34,7 +34,7 @@
                   <%= link_to 'Track', user_stocks_path(user: current_user, ticker: stock.ticker),
                     method: :post, class: 'btn btn-sm btn-success ml-3' %>
                 <% elsif current_user.id != @user.id %>
-                  <% if current_user.alread_tracking_stock?(stock.ticker) %>
+                  <% if current_user.already_tracking?(stock.ticker) %>
                     <span class="badge badge-info ml-3">
                       already tracking
                     </span>

@@ -1,6 +1,6 @@
 class StocksController < ApplicationController
   def search
-    if params[:stock]. present?
+    if params[:stock].present?
       @stock = Stock.new_lookup(params[:stock])
       if @stock
         respond_to do |format|
@@ -8,13 +8,13 @@ class StocksController < ApplicationController
         end
       else
         respond_to do |format|
-          flash.now[:alert] = "No results found"
+          flash.now[:alert] = 'No results found'
           format.js { render partial: 'users/stock_result' }
-        end        
+        end
       end
     else
       respond_to do |format|
-        flash.now[:alert] = "Unless you like hitting buttons, please enter a value to search"
+        flash.now[:alert] = 'Unless you like hitting buttons, please enter a value to search'
         format.js { render partial: 'users/stock_result' }
       end
     end
