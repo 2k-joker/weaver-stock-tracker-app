@@ -1,16 +1,17 @@
 class Stock < ApplicationRecord
   # Validations
   validates :name, :ticker, :last_price, presence: true
+
   # Associations
   has_many :user_stocks, dependent: :destroy
   has_many :users, through: :user_stocks
 
   class << self
-    def check_db(ticker_symbol)
+    def find_by_ticker(ticker_symbol)
       find_by(ticker: ticker_symbol.upcase)
     end
 
-    def new_lookup(company_name)
+    def lookup(company_name)
       ticker_symbol = retrieve_ticker_symbol(company_name)
 
       build_stock_object(ticker_symbol)
@@ -30,15 +31,6 @@ class Stock < ApplicationRecord
       iex_client.stock_market_list(:losers)
     end
 
-    def update_price_and_performance_for(stock)
-      look_up = new_lookup(stock.ticker)
-
-      stock.last_price = look_up.last_price
-      stock.recent_performance = look_up.recent_performance
-      stock.save!
-      stock
-    end
-
     private
 
     def build_stock_object(ticker_symbol)
@@ -50,12 +42,16 @@ class Stock < ApplicationRecord
       )
     end
 
-    def iex_client
+    def app_credentials
       # Run -> $ EDITOR="code --wait" rails credentials:edit
       # to store credentials
+      Rails.application.credentials
+    end
+
+    def iex_client
       @iex_client ||= IEX::Api::Client.new(
-        publishable_token: Rails.application.credentials.iex_client[:sandbox_api_token],
-        secret_token: Rails.application.credentials.iex_client[:sandbox_secret_token],
+        publishable_token: app_credentials.iex_client[:sandbox_api_token],
+        secret_token: app_credentials.iex_client[:sandbox_secret_token],
         endpoint: 'https://sandbox.iexapis.com/v1'
       )
     end
@@ -80,5 +76,13 @@ class Stock < ApplicationRecord
         ApiClients::YahooApi::Config.new
       )
     end
+  end
+
+  def update_price_and_performance
+    look_up = self.class.lookup(ticker)
+
+    self.last_price = look_up.last_price
+    self.recent_performance = look_up.recent_performance
+    save!
   end
 end
