@@ -19,7 +19,7 @@ class User < ApplicationRecord
   end
 
   def already_tracking?(ticker_symbol)
-    stock = Stock.check_db(ticker_symbol)
+    stock = Stock.find_by_ticker(ticker_symbol)
     return false unless stock
 
     stocks.where(id: stock.id).exists?

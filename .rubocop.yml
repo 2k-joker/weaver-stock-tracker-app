@@ -125,6 +125,12 @@ Naming/RescuedExceptionsVariableName:
 Naming/VariableNumber:
   Enabled: false
 
+Rails:
+  Enabled: true
+
+Rails/DynamicFindBy:
+  Enabled: false
+
 Style/Alias:
   EnforcedStyle: prefer_alias_method
 
