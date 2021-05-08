@@ -5,7 +5,7 @@
   <%= form_tag search_stock_path, remote: true, method: :get do %>
     <div class="form-group row">
       <div class="col-sm-9 no-right-padding">
-        <%= text_field_tag :stock, params[:stock], placeholder: 'ticker symbol',
+        <%= text_field_tag :stock, params[:stock], placeholder: 'company name',
           autofocus: true, class: 'form-control' %>
       </div>
       <div class="col-sm-3 no-left-padding">

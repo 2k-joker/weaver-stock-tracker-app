@@ -83,6 +83,5 @@ class Stock < ApplicationRecord
 
     self.last_price = look_up.last_price
     self.recent_performance = look_up.recent_performance
-    save!
   end
 end
